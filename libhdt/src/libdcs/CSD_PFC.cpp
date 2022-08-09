@@ -345,6 +345,17 @@ bool CSD_PFC::locateBlock(const unsigned char *s, size_t *block) {
   while (left <= right) {
     center = (left + right) / 2;
 
+    // TODO Could this strcmp be replaced with vectorization by
+    // setting an appropriate blocksize and ensuring the lenth of
+    // strings to compare fits in vector memory? May need to convert
+    // to std::string so that length is already known if that cannot
+    // be guaranteed.
+
+    // Ref: https://www.strchr.com/strcmp_and_strlen_using_sse_4.2
+
+    // Ref:
+    // https://stackoverflow.com/questions/26586060/why-is-strcmp-not-simd-optimized
+
     // Comparing s and the first string in the c-th block
     cmp = strcmp((char *)(text + blocks->get(center)), (char *)s);
 

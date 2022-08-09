@@ -40,6 +40,16 @@ AC_ARG_ENABLE([libcds],
 AM_CONDITIONAL([WANTS_LIBCDS], [test x$enable_cds != xno])
 
 # Dependencies
+AC_ARG_WITH([tbb],
+  AS_HELP_STRING([--with-tbb], [Use Intel oneAPI oneTBB [default=yes] ]),
+   [],[with_tbb=true])
+AS_IF([test x$with_tbb != xno],
+  [PKG_CHECK_MODULES([TBB],[tbb],
+    [AC_DEFINE([HAVE_TBB],[1],[tbb available])]
+    [EXTRAFLAGS="${EXTRAFLAGS} -DHAVE_TBB"]
+    [AC_SUBST(EXTRAFLAGS)])
+  ])
+
 AC_ARG_WITH([zlib],
   AS_HELP_STRING([--with-zlib], [Use z library [default=yes] ]),
    [],[with_zlib=true])

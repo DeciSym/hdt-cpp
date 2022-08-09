@@ -41,7 +41,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
-#include <unordered_map>
+#include <oneapi/tbb/concurrent_unordered_map.h>
 
 namespace hdt {
 
@@ -62,7 +62,7 @@ struct str_cmp {
 
 typedef std::pair<const char*, DictionaryEntry *> DictEntryPair;
 
-typedef std::unordered_map<const char *, DictionaryEntry *, hash<std::string>, str_cmp> DictEntryHash;
+typedef oneapi::tbb::concurrent_unordered_map <const char *, DictionaryEntry *, hash<std::string>, str_cmp> DictEntryHash;
 
 typedef DictEntryHash::const_iterator DictEntryIt;
 
