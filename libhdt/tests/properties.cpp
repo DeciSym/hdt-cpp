@@ -104,7 +104,7 @@ split(const std::string &s, char delim)
  * Each query is a property in config file and its counterpart in the HDT
  * header.
  */
-std::map<std::string, std::tuple<std::string, std::string>> queries =
+phmap::parallel_flat_hash_map<std::string, std::tuple<std::string, std::string>> queries =
 {
 	{ "dictionary.type", std::make_tuple("_:dictionary", "<http://purl.org/dc/terms/format>")},
 	{ "dict.block.size", std::make_tuple("_:dictionary", "<http://purl.org/HDT/hdt#dictionaryblockSize>")},

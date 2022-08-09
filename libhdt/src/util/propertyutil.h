@@ -7,7 +7,7 @@
 #ifndef _PROPERTYUTIL_H
 #define _PROPERTYUTIL_H
 
-#include <map>
+#include <parallel_hashmap/phmap.h>
 #include <string>
 #include <iostream>
 
@@ -16,7 +16,7 @@ class PropertyUtil
 
 public:
 
-    typedef std::map<std::string, std::string> PropertyMapT;
+    typedef phmap::parallel_flat_hash_map<std::string, std::string> PropertyMapT;
     typedef PropertyMapT::value_type           value_type;
     typedef PropertyMapT::iterator             iterator;
 

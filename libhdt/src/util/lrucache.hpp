@@ -8,7 +8,7 @@
 #ifndef _LRUCACHE_HPP_INCLUDED_
 #define	_LRUCACHE_HPP_INCLUDED_
 
-#include <oneapi/tbb/concurrent_unordered_map.h>
+#include <parallel_hashmap/phmap.h>
 #include <list>
 #include <cstddef>
 #include <stdexcept>
@@ -62,7 +62,7 @@ public:
 	
 private:
 	std::list<key_value_pair_t> _cache_items_list;
-	oneapi::tbb::concurrent_unordered_map<key_t, list_iterator_t> _cache_items_map;
+        phmap::parallel_flat_hash_map<key_t, list_iterator_t> _cache_items_map;
 	size_t _max_size;
 };
 

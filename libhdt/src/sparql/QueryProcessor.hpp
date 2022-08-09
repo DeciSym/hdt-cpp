@@ -26,7 +26,7 @@ public:
 
 class BasicVarBindingString : public VarBindingString {
 private:
-	map<string, TripleComponentRole> varRole;
+	phmap::parallel_flat_hash_map<string, TripleComponentRole> varRole;
 	VarBindingID *varID;
 	Dictionary *dict;
 
@@ -40,7 +40,7 @@ private:
 		throw std::runtime_error("Var name does not exist");
 	}
 public:
-	BasicVarBindingString(map<string, TripleComponentRole> &varRole, VarBindingID *varID, Dictionary *dict) :
+	BasicVarBindingString(phmap::parallel_flat_hash_map<string, TripleComponentRole> &varRole, VarBindingID *varID, Dictionary *dict) :
 	varRole(varRole),
 	varID(varID),
 	dict(dict)

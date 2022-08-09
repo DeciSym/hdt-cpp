@@ -33,9 +33,9 @@
 #define HDT_HDTSPECIFICATION_HPP_
 
 #include <string>
-#include <map>
+#include <parallel_hashmap/phmap.h>
 
-typedef std::map<std::string, std::string> PropertyMap;
+typedef phmap::parallel_flat_hash_map<std::string, std::string> PropertyMap;
 
 namespace hdt {
 

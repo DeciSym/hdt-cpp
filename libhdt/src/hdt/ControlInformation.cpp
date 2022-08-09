@@ -203,7 +203,7 @@ void ControlInformation::setFormat(const std::string& format) {
 }
 
 const std::string& ControlInformation::get(const std::string& key) const {
-  std::map<string,string>::const_iterator it = map.find(key);
+  phmap::parallel_flat_hash_map<string,string>::const_iterator it = map.find(key);
   return it == map.end() ? EMPTY_STRING : it->second;
 }
 
@@ -212,7 +212,7 @@ void ControlInformation::set(const std::string& key, const std::string& value) {
 }
 
 uint64_t ControlInformation::getUint(const std::string& key) const {
-  std::map<string,string>::const_iterator it = map.find(key);
+  phmap::parallel_flat_hash_map<string,string>::const_iterator it = map.find(key);
   return it == map.end() ? 0 : strtoull(it->second.c_str(), NULL, 10);
 }
 

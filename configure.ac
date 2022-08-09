@@ -40,13 +40,13 @@ AC_ARG_ENABLE([libcds],
 AM_CONDITIONAL([WANTS_LIBCDS], [test x$enable_cds != xno])
 
 # Dependencies
-AC_ARG_WITH([tbb],
-  AS_HELP_STRING([--with-tbb], [Use Intel oneAPI oneTBB [default=yes] ]),
-   [],[with_tbb=true])
-AS_IF([test x$with_tbb != xno],
-  [PKG_CHECK_MODULES([TBB],[tbb],
-    [AC_DEFINE([HAVE_TBB],[1],[tbb available])]
-    [EXTRAFLAGS="${EXTRAFLAGS} -DHAVE_TBB"]
+AC_ARG_WITH([phmap],
+  AS_HELP_STRING([--with-phmap], [Use Parallel Hashamp [default=yes] ]),
+   [],[with_phmap=true])
+AS_IF([test x$with_phmap != xno],
+  [PKG_CHECK_MODULES([PHMAP],[phmap],
+    [AC_DEFINE([HAVE_PHMAP],[1],[phmap available])]
+    [EXTRAFLAGS="${EXTRAFLAGS} -DHAVE_PHMAP"]
     [AC_SUBST(EXTRAFLAGS)])
   ])
 

@@ -36,11 +36,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
+#include <parallel_hashmap/phmap.h>
 
 namespace hdt {
 
-typedef std::map<std::string, std::string> PropertyMap;
+typedef phmap::parallel_flat_hash_map<std::string, std::string> PropertyMap;
 typedef PropertyMap::iterator PropertyMapIt;
 
 enum ControlInformationType {

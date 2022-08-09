@@ -51,7 +51,7 @@ VarBindingString* QueryProcessor::searchJoin(vector<TripleString>& patterns, set
 		}
 
 		set < string > neededVars;
-		map < string, TripleComponentRole > varRole;
+		phmap::parallel_flat_hash_map < string, TripleComponentRole > varRole;
 
 		// Gather all appearing vars.
 		for (vector<TripleString>::iterator itPat = patterns.begin();

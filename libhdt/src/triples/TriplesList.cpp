@@ -331,15 +331,15 @@ const string vocabPredicate = "http://purl.org/HDT/hdt#";
 void TriplesList::calculateDegree(string path, size_t numPredicates,size_t maxSO) {
 	const int maxval = 1000000;
 	const int nbins = 1000000;
-	map<int, Histogram*> hDegreePartialPerPredicate;
+	phmap::parallel_flat_hash_map<int, Histogram*> hDegreePartialPerPredicate;
 
 	for (size_t i=1;i<=numPredicates;i++){
 		 Histogram* hDegreePart = new Histogram(0, maxval, nbins);
 		 hDegreePartialPerPredicate[i]=hDegreePart;
 	}
 
-	map<string, int> listsofPredicates; //compute the different lists of Predicates;
-	map<int, int> predicateinlists; //compute the number of lists per predicate;
+	phmap::parallel_flat_hash_map<string, int> listsofPredicates; //compute the different lists of Predicates;
+	phmap::parallel_flat_hash_map<int, int> predicateinlists; //compute the number of lists per predicate;
 	string listPredicates = ""; //currentlist;
 	size_t numberofYs = 0;
 
@@ -399,7 +399,7 @@ void TriplesList::calculateDegree(string path, size_t numPredicates,size_t maxSO
 				hDegreePartial.add(ycount);
 
 				//update hDegreePartialPerPredicate
-				std::map<int,Histogram*>::iterator it = hDegreePartialPerPredicate.find(y); //search some previous degree of the predicate
+				phmap::parallel_flat_hash_map<int,Histogram*>::iterator it = hDegreePartialPerPredicate.find(y); //search some previous degree of the predicate
 				  if (it != hDegreePartialPerPredicate.end()){
 					  it->second->add(ycount);
 				  }
@@ -472,7 +472,7 @@ void TriplesList::calculateDegree(string path, size_t numPredicates,size_t maxSO
 					;
 
 					//update hDegreePartialPerPredicate
-					std::map<int,Histogram*>::iterator it = hDegreePartialPerPredicate.find(y); //search some previous degree of the predicate
+					phmap::parallel_flat_hash_map<int,Histogram*>::iterator it = hDegreePartialPerPredicate.find(y); //search some previous degree of the predicate
 					  if (it != hDegreePartialPerPredicate.end()){
 						  it->second->add(ycount);
 					  }
@@ -539,7 +539,7 @@ void TriplesList::calculateDegree(string path, size_t numPredicates,size_t maxSO
 		hDegreePartial.add(ycount);
 
 		//update hDegreePartialPerPredicate
-		std::map<int,Histogram*>::iterator it = hDegreePartialPerPredicate.find(y); //search some previous degree of the predicate
+		phmap::parallel_flat_hash_map<int,Histogram*>::iterator it = hDegreePartialPerPredicate.find(y); //search some previous degree of the predicate
 		  if (it != hDegreePartialPerPredicate.end()){
 			  it->second->add(ycount);
 		  }
@@ -671,7 +671,7 @@ void TriplesList::calculateDegree(string path, size_t numPredicates,size_t maxSO
 		if (direcc == "out") { //Calculate listsofPredicates values:
 
 			Histogram predicateFreqs(0, maxval, nbins);
-			for (std::map<string, int>::iterator it = listsofPredicates.begin();
+			for (phmap::parallel_flat_hash_map<string, int>::iterator it = listsofPredicates.begin();
 					it != listsofPredicates.end(); ++it) {
 				//std::cout << it->first << " => " << it->second << '\n';
 				predicateFreqs.add(it->second);
@@ -695,7 +695,7 @@ void TriplesList::calculateDegree(string path, size_t numPredicates,size_t maxSO
 
 
 			Histogram predicateHist(0, maxval, nbins);
-			for (std::map<int, int>::iterator it = predicateinlists.begin();
+			for (phmap::parallel_flat_hash_map<int, int>::iterator it = predicateinlists.begin();
 					it != predicateinlists.end(); ++it) {
 				//std::cout << it->first << " => " << it->second << '\n';
 				predicateHist.add(it->second);
@@ -713,8 +713,8 @@ void TriplesList::calculateDegree(string path, size_t numPredicates,size_t maxSO
 
 		}
 		// dump the partial degree of each predicate
-		for (std::map<int, Histogram*>::iterator it = hDegreePartialPerPredicate.begin();
-							it != hDegreePartialPerPredicate.end(); ++it) {
+		for (phmap::parallel_flat_hash_map<int, Histogram*>::iterator it = hDegreePartialPerPredicate.begin();
+                     it != hDegreePartialPerPredicate.end(); ++it) {
 
 			it->second->end();
 			int predicateID = it->first;
@@ -741,15 +741,15 @@ void TriplesList::calculateDegree(string path, size_t numPredicates,size_t maxSO
 void TriplesList::calculateMinStats(string path, size_t numPredicates) {
 	const int maxval = 1000000;
 	const int nbins = 1000000;
-	map<int, Histogram*> hDegreePartialPerPredicate;
+	phmap::parallel_flat_hash_map<int, Histogram*> hDegreePartialPerPredicate;
 
 	for (size_t i=1;i<=numPredicates;i++){
 		 Histogram* hDegreePart = new Histogram(0, maxval, nbins);
 		 hDegreePartialPerPredicate[i]=hDegreePart;
 	}
 
-	map<string, int> listsofPredicates; //compute the different lists of Predicates;
-	map<int, int> predicateinlists; //compute the number of lists per predicate;
+	phmap::parallel_flat_hash_map<string, int> listsofPredicates; //compute the different lists of Predicates;
+	phmap::parallel_flat_hash_map<int, int> predicateinlists; //compute the number of lists per predicate;
 	string listPredicates = ""; //currentlist;
 	size_t numberofYs = 0;
 
@@ -805,7 +805,7 @@ void TriplesList::calculateMinStats(string path, size_t numPredicates) {
 				hDegreePartial.add(ycount);
 
 				//update hDegreePartialPerPredicate
-				std::map<int,Histogram*>::iterator it = hDegreePartialPerPredicate.find(y); //search some previous degree of the predicate
+				phmap::parallel_flat_hash_map<int,Histogram*>::iterator it = hDegreePartialPerPredicate.find(y); //search some previous degree of the predicate
 				  if (it != hDegreePartialPerPredicate.end()){
 					  it->second->add(ycount);
 				  }
@@ -838,7 +838,7 @@ void TriplesList::calculateMinStats(string path, size_t numPredicates) {
 					;
 
 					//update hDegreePartialPerPredicate
-					std::map<int,Histogram*>::iterator it = hDegreePartialPerPredicate.find(y); //search some previous degree of the predicate
+					phmap::parallel_flat_hash_map<int,Histogram*>::iterator it = hDegreePartialPerPredicate.find(y); //search some previous degree of the predicate
 					  if (it != hDegreePartialPerPredicate.end()){
 						  it->second->add(ycount);
 					  }
@@ -877,7 +877,7 @@ void TriplesList::calculateMinStats(string path, size_t numPredicates) {
 		hDegreePartial.add(ycount);
 
 		//update hDegreePartialPerPredicate
-		std::map<int,Histogram*>::iterator it = hDegreePartialPerPredicate.find(y); //search some previous degree of the predicate
+		phmap::parallel_flat_hash_map<int,Histogram*>::iterator it = hDegreePartialPerPredicate.find(y); //search some previous degree of the predicate
 		  if (it != hDegreePartialPerPredicate.end()){
 			  it->second->add(ycount);
 		  }
@@ -946,8 +946,8 @@ void TriplesList::calculateMinStats(string path, size_t numPredicates) {
 
 
 	// dump the partial degree of each predicate
-	for (std::map<int, Histogram*>::iterator it = hDegreePartialPerPredicate.begin();
-						it != hDegreePartialPerPredicate.end(); ++it) {
+	for (phmap::parallel_flat_hash_map<int, Histogram*>::iterator it = hDegreePartialPerPredicate.begin();
+             it != hDegreePartialPerPredicate.end(); ++it) {
 
 		it->second->end();
 		int predicateID = it->first;
@@ -975,10 +975,10 @@ void TriplesList::calculateDegreeType(string path, size_t rdftypeID) {
 	const int maxval = 1000000;
 	const int nbins = 1000000;
 
-	map<string, int> listsofPredicates; //compute the different lists of Predicates;
-	map<int, int> predicateinlists; //compute the number of lists per predicate;
-	map<string, int> listofClassesPredicates; //compute the number of repetitions per each concatenation 0IdObject+predicateList
-	map<int, int> classesinlists; //compute the number of lists per classs
+	phmap::parallel_flat_hash_map<string, int> listsofPredicates; //compute the different lists of Predicates;
+	phmap::parallel_flat_hash_map<int, int> predicateinlists; //compute the number of lists per predicate;
+	phmap::parallel_flat_hash_map<string, int> listofClassesPredicates; //compute the number of repetitions per each concatenation 0IdObject+predicateList
+	phmap::parallel_flat_hash_map<int, int> classesinlists; //compute the number of lists per classs
 
 	string listPredicates = ""; //currentlist of Predicates;
 	vector<int> listClasses; //currentlist of Classes;
@@ -1254,7 +1254,7 @@ void TriplesList::calculateDegreeType(string path, size_t rdftypeID) {
 	out.close();
 
 	Histogram predicateFreqs(0, maxval, nbins);
-	for (std::map<string, int>::iterator it = listsofPredicates.begin();
+	for (phmap::parallel_flat_hash_map<string, int>::iterator it = listsofPredicates.begin();
 			it != listsofPredicates.end(); ++it) {
 		//	std::cout << it->first << " => " << it->second << '\n';
 		predicateFreqs.add(it->second);
@@ -1270,7 +1270,7 @@ void TriplesList::calculateDegreeType(string path, size_t rdftypeID) {
 //	out_summary << "# Total: " << numberofYs << endl;
 
 	Histogram ListClassesHist(0, maxval, nbins);
-	for (std::map<int, int>::iterator it = classesinlists.begin();
+	for (phmap::parallel_flat_hash_map<int, int>::iterator it = classesinlists.begin();
 			it != classesinlists.end(); ++it) {
 		//std::cout << it->first << " => " << it->second << '\n';
 		ListClassesHist.add(it->second);
@@ -1282,7 +1282,7 @@ void TriplesList::calculateDegreeType(string path, size_t rdftypeID) {
 	ListClassesHist.dumpStr(out_summary, false);
 
 	Histogram predicateHist(0, maxval, nbins);
-	for (std::map<int, int>::iterator it = predicateinlists.begin();
+	for (phmap::parallel_flat_hash_map<int, int>::iterator it = predicateinlists.begin();
 			it != predicateinlists.end(); ++it) {
 		//std::cout << it->first << " => " << it->second << '\n';
 		predicateHist.add(it->second);
