@@ -59,6 +59,7 @@ src/sequence/IntSequence.cpp \
 src/sequence/LogSequence2.cpp \
 src/sequence/LogSequence.cpp \
 src/sequence/WaveletSequence.cpp \
+src/sparql/BasicVarBindingString.cpp\
 src/sparql/IndexJoinBinding.cpp \
 src/sparql/JoinAlgorithms.cpp \
 src/sparql/MergeJoinBinding.cpp \
@@ -132,6 +133,7 @@ src/sequence/LogSequence2.hpp\
 src/sequence/LogSequence.hpp\
 src/sequence/WaveletSequence.hpp\
 src/sparql/BaseJoinBinding.hpp\
+src/sparql/BasicVarBindingString.hpp\
 src/sparql/CachedBinding.hpp\
 src/sparql/IndexJoinBinding.hpp\
 src/sparql/JoinAlgorithms.hpp\

@@ -1,8 +1,9 @@
-#include <stdexcept>
 #ifndef VARFILTERBINDING_HPP
 #define VARFILTERBINDING_HPP
 
 #include "VarBindingInterface.hpp"
+#include <stdexcept>
+#include <set>
 
 namespace hdt {
 
@@ -14,7 +15,7 @@ private:
     vector<string> varNames;
     vector<int> varIds;
 public:
-    VarFilterBinding(VarBindingInterface *child, set<string> neededVars) : child(child) {
+  VarFilterBinding(VarBindingInterface *child, std::set<string> neededVars) : child(child) {
     for(size_t i=0;i<child->getNumVars();i++) {
 	    const char *varName = child->getVarName(i);
 
